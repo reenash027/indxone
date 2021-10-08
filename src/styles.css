@@ -1,0 +1,180 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.dx-field-item-content dx-field-item-content-location-right{
+    width: 400px!important;
+}
+.headerColor{
+    color:white;
+    background-color: #e1000f;
+    font-weight: bold;
+  }
+  .subHeaderColor{
+    color:black;
+    /*font-weight: bold;*/
+  }
+.topbar {
+    overflow: hidden;
+    /*    z-index: -1;*/
+    background-color: red; /* #ff0000;  #333;*/
+    height: 48px;
+    position: relative;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-bottom:2px;
+    padding-right:5px;
+    width:1500px;
+}
+div#logo-box {
+   
+    float: left;
+    width: 70px;
+    height: 46px;   
+}
+div#name-box {
+    float: left;
+    width: 50px;
+    height: 46px;
+    background-color: transparent;
+    margin-left: 5px;    
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+div#middle-box {
+    margin: 0 auto;
+    width: 500px;
+    height: 46px;
+    padding-top:5px;
+    background-color: transparent;
+    /*border: solid lightcoral;*/
+    /*margin-left: 50px;*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight:bold;
+    color:white;
+    
+}
+
+.beta {
+    margin: 0 auto;
+    
+    height: 46px;
+    padding-top:5px;
+    background-color: transparent;
+    /*border: solid lightcoral;*/
+    /*margin-left: 50px;*/
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight:bold;
+    color:white;    
+}
+div#idModule {
+    float: right;
+    width: 100px;
+    height: 25px;
+    margin-top: -40px;
+    padding-left:5px;
+    padding-top:5px;
+    background-color: whitesmoke;
+    border: thin grey;
+    text-align:center;
+    align-items:center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: black;
+}
+
+
+.logo {
+   width: 70px;
+   height: 46px;
+   background-image: url("FCCSuCo_70x46px.png");
+}
+
+.navbox {
+    overflow: hidden;
+    /*    z-index: -1;*/
+    background-color: lightgrey; /* #ff0000;  #333;*/
+    height: 60px;
+    position: relative;
+    margin-top:5px;
+    padding-top: 5px;
+    padding-left: 70px;
+    padding-bottom: 2px;
+}
+.tile-style {
+    float: left;
+    margin-left: 15px;
+    padding-top: 10px;
+    border-radius: 10px;
+    background: grey;
+    border: inset thin white;
+    width: 200px;
+    height: 46px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+}
+.tile-style:hover {
+    background-color: ghostwhite;
+    color: black;
+    border-color:red;
+    cursor:pointer;
+}
+.tile-style:active {
+    transform: scale(0.98);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+    /* Lowering the shadow */
+    background-color:red;
+    color:white;
+}
+.overview {
+    float: left;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    padding-left: 100px;
+    padding-top: 50px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: black;
+}
+#overlayBatchUpdate {
+    visibility: hidden;
+    position: fixed;
+    left: 0px;
+    top: -150px;
+    width: 100%;
+    height: 2000px;
+    /* text-align:center; */
+    z-index: 1000;
+    /*background-color: rgba(220, 220, 220, 0.5);*/
+	transform:translate(0px,0px);
+	transition:all 0s ease 0s;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 190px;
+}
+
+
+#overlayBatchUpdateDiv {
+    position: absolute;
+    /*left: 0px;*/
+    top: 508px;
+    left: 824px;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    width: 830px;
+    height: 480px;
+    /*margin: 100px auto;*/
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: 15px;
+    padding-left: 55px;
+    /* text-align:center; */
+}

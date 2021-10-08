@@ -1,0 +1,244 @@
+<div class="radioYear">
+    <input type="radio" value="0" name="indexyear" (change)="changeYear($event)" checked> CURRENT YEAR &nbsp;&nbsp;
+    <input type="radio" value="1" name="indexyear" (change)="changeYear($event)"> NEXT YEAR
+</div>
+<div>
+    <dx-button #btnBatchUpdate
+        stylingMode="contained"
+        text="Batch Update"
+        type="normal"
+        [width]="150"
+        (onClick)="onBatchUpdate()" [disabled]="true">
+    </dx-button> &nbsp;&nbsp;&nbsp;&nbsp;
+    <dx-button #btnClearUpdate
+        stylingMode="contained"
+        text="Clear Selection"
+        type="normal"
+        [width]="150"
+        (onClick)="onClearSelection()" [disabled]="true">
+    </dx-button> &nbsp;&nbsp;&nbsp;&nbsp;
+    <dx-button #btnRefresh
+        stylingMode="contained"
+        text="Refresh"
+        type="normal"
+        [width]="150"
+        (onClick)="onRefreshGrid()">
+    </dx-button>
+</div>
+<div id="divINDXGrid">
+    <!--[customizeColumns]="customizeColumns" -->
+    
+<dx-data-grid #dataGridIndx [dataSource]="indexData" [showBorders]="true" [columnAutoWidth]="true" [repaintChangesOnly]="true" width="1500" keyExpr="ID" 
+[columns]="columns" (onRowUpdating)="updateIndex($event)" (onSelectionChanged)="selectionChangedHandler($event)" 
+(onCellPrepared)="onCellPrepared($event)" >
+    <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+    <dxo-filter-row [visible]="true" ></dxo-filter-row>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+    <dxo-search-panel [visible]="true" [width]="240" placeholder="Search..."></dxo-search-panel>
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager 
+        [visible]="true" 
+        allowedPageSizes = "[10, 20, 50]"
+        displayMode="full"
+        [showPageSizeSelector]="true"
+        [showInfo]="true"
+        [showNavigationButtons]="true">
+    </dxo-pager>
+    <dxo-export [enabled]="true" [fileName]="exportFileName"></dxo-export>
+    <!--<dxo-editing
+        [allowUpdating]="true" mode="popup" [useIcons] ="true"> 'batch' | 'cell' | 'form' | 'popup' 
+        
+    </dxo-editing>-->
+    <dxo-editing 
+            mode="popup"
+            [allowUpdating]="true" [useIcons] ="true">
+            <dxo-texts cancelRowChanges="CLOSE" saveRowChanges="SAVE"></dxo-texts>            
+            <!--<dxo-form [colCount]="3" labelLocation="top">
+                <dxi-item itemType="group" caption="Master Data" [colSpan]="1" >
+                    <dxi-item dataField="ID"></dxi-item>
+                    <dxi-item dataField="Responsible"></dxi-item>
+                    <dxi-item dataField="PurchasingBU"></dxi-item>                    
+                    <dxi-item dataField="Plant"></dxi-item>
+                    <dxi-item dataField="PlantText"></dxi-item>
+                    <dxi-item dataField="PurchasingCountry"></dxi-item>
+                    <dxi-item dataField="CombinedBasket"></dxi-item>
+                    <dxi-item dataField="CombinedBasketText"></dxi-item> 
+                    <dxi-item dataField="MaterialNumber"></dxi-item> 
+                    <dxi-item dataField="MaterialNumberText"></dxi-item> 
+                    <dxi-item dataField="Supplier"></dxi-item> 
+                    <dxi-item dataField="SupplierText"></dxi-item>    
+                    <dxi-item dataField="SpendBaseline"></dxi-item> 
+                </dxi-item>
+                
+                <dxi-item itemType="group" caption="Cost Split" [colCount]="5" [colSpan]="2">
+                    <dxi-item dataField="Raws %"></dxi-item>
+                    <dxi-item dataField="Packs %"></dxi-item> 
+                    <dxi-item dataField="Logistics %"></dxi-item>  
+                    <dxi-item dataField="Processing %"></dxi-item>
+                    <dxi-item dataField="PriceValidity"></dxi-item>
+                    <dxi-item itemType="group" caption="Current/Next Year" [colSpan]="5" >
+                        <dxi-item itemType="tabbed">
+                            <dxo-tab-panel-options [deferRendering]="false">
+                            </dxo-tab-panel-options>
+                            <dxi-tab title="Current Year">                                
+                                
+                                        <dx-data-grid #dataGridIndxCY [dataSource] = "singleIndexCY" (onRowUpdating)="onEditCYGrid($event)" [columns]="singleIndexCol">
+                                            <dxo-editing mode="cell"
+                                                [allowUpdating]="true"
+                                                [selectTextOnEditStart]="true"
+                                                startEditAction="click">
+                                            </dxo-editing>
+                                        </dx-data-grid>                                
+                            </dxi-tab>
+                            <dxi-tab title="Next Year">
+                                <dx-data-grid [dataSource] = "singleIndexNY" (onRowUpdating)="onEditNYGrid($event)" [columns]="singleIndexCol">
+                                    <dxo-editing mode="cell"
+                                        [allowUpdating]="true"
+                                        [selectTextOnEditStart]="true"
+                                        startEditAction="click">
+                                    </dxo-editing>
+                                </dx-data-grid>
+                            </dxi-tab>
+                        </dxi-item>
+                    </dxi-item>
+                </dxi-item>                
+            </dxo-form>-->
+        </dxo-editing>
+       
+    
+    <!--<dxi-column type="buttons" [width]="110">
+        <dxi-button name="edit"></dxi-button>
+    </dxi-column>-->
+    <dxo-selection
+    selectAllMode="allPages"
+    showCheckBoxesMode="always"
+    mode="multiple"></dxo-selection>
+            <!--showCheckBoxesMode = "none", "onClick", "onLongTap", "always"
+                selectAllMode = "allPages", "page"-->           
+</dx-data-grid>
+
+<dx-popup
+    [(title)]="editPopupTitle"
+    [(visible)]="editPopup" [height]="780" >
+    <dx-load-indicator id="medium-indicator" height="40" width="40"></dx-load-indicator>
+    <div *dxTemplate="let data of 'content'">
+        <div class="form">
+            <table style="width: 100%;">
+                <tr><td rowspan="2" style="width: 40%;vertical-align: top;padding-right: 45px">
+                        <tr>
+                            <td colspan="2"><div class="dx-fieldset-header">MASTER DATA</div></td>
+                        </tr>                      
+                        <tr>
+                            <td class="dx-field-label">Purchasing BU</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtPurchasingBU" [readOnly]="true" style="width: 380px;"></dx-text-box></td>                       
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">Purchasing Country</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtPurchasingCountry" [readOnly]="true" style="width: 380px;"></dx-text-box></td>                       
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">Plant</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtPlant" [readOnly]="true" style="width: 380px;"></dx-text-box></td>                    
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">PlantText</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtPlantText" [readOnly]="true" style="width: 380px;"></dx-text-box></td>
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">CombinedBasket</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtCombinedBasket" [readOnly]="true" style="width: 380px;"></dx-text-box></td>
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">CombinedBasketText</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtCombinedBasketText" [readOnly]="true" style="width: 380px;"></dx-text-box></td>
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">MaterialNumber</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtMaterialNumber" [readOnly]="true" style="width: 380px;"></dx-text-box></td>     
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">MaterialNumberText</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtMaterialNumberText" [readOnly]="true" style="width: 380px;"></dx-text-box></td>    
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">Supplier</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtSupplier" [readOnly]="true" style="width: 380px;"></dx-text-box></td>
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">SupplierText</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtSupplierText" [readOnly]="true" style="width: 380px;"></dx-text-box></td>     
+                        </tr>
+                        <tr>
+                            <td class="dx-field-label">SpendBaseline</td>
+                            <td style="padding-bottom: 10px;"><dx-text-box [(value)]="txtSpendBaseline" [readOnly]="true" style="width: 380px;"></dx-text-box></td>    
+                        </tr>
+                    </td>
+                    <td style="width: 60%;vertical-align: top;height: 130px;">
+                        <tr>
+                            <td colspan="5"><div class="dx-fieldset-header">COST SPLIT</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="dx-field-item-label-text">Raws</div></td>
+                            <td><div class="dx-field-item-label-text">Packs</div></td>
+                            <td><div class="dx-field-item-label-text">Logistics</div></td>
+                            <td><div class="dx-field-item-label-text">Processing</div></td>
+                            <td><div class="dx-field-item-label-text">Price Validity</div></td>
+                        </tr>
+                        <tr>
+                            <td><dx-text-box [(value)]="txtRaws" (onValueChanged)="onRawsChanged($event)"></dx-text-box></td>
+                            <td><dx-text-box [(value)]="txtPacks" (onValueChanged)="onPacksChanged($event)"></dx-text-box></td>
+                            <td><dx-text-box [(value)]="txtLogistics" (onValueChanged)="onLogChanged($event)"></dx-text-box></td>
+                            <td><dx-text-box [(value)]="txtProcessing" (onValueChanged)="onProcChanged($event)"></dx-text-box></td>
+                            <!--<td><dx-text-box [(value)]="txtPriceValidity"></dx-text-box></td>-->
+                            <td><dx-date-box [value]="txtPriceValidity" (onValueChanged)="onPriValChanged($event)" type="date" displayFormat="MMM yyyy"></dx-date-box></td>
+                        </tr>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 60%;vertical-align: top;height: 280px">
+                        <dx-tab-panel>
+                            <dxi-item title="CURRENT YEAR">
+                                <dx-data-grid #dataGridIndxCY [dataSource] = "singleIndexCY" (onRowUpdating)="onEditCYGrid($event)" [columns]="singleIndexCol">
+                                    <dxo-editing mode="cell"
+                                        [allowUpdating]="true"
+                                        [selectTextOnEditStart]="true"
+                                        startEditAction="click">
+                                    </dxo-editing>
+                                </dx-data-grid>
+                            </dxi-item>
+                            <dxi-item title="NEXT YEAR">
+                                <dx-data-grid #dataGridIndxNY [dataSource] = "singleIndexNY" (onRowUpdating)="onEditCYGrid($event)" [columns]="singleIndexCol">
+                                    <dxo-editing mode="cell"
+                                        [allowUpdating]="true"
+                                        [selectTextOnEditStart]="true"
+                                        startEditAction="click">
+                                    </dxo-editing>
+                                </dx-data-grid>
+                            </dxi-item>
+                        </dx-tab-panel>
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="text-align: center;height: 100px;">
+                <dx-button #btnBatchSave
+                    stylingMode="contained"
+                    text="SAVE"
+                    type="normal"
+                    [width]="130"
+                    (onClick)="onBatchSave($event)">
+                    </dx-button>&nbsp;&nbsp;&nbsp;
+                    <dx-button #btnBatchClose
+                    stylingMode="contained"
+                    text="CLOSE"
+                    type="normal"
+                    [width]="130"
+                    (onClick)="onBatchClose()">
+                    </dx-button>
+                </td></tr>
+            </table>
+        </div>
+    </div>
+</dx-popup>
+</div>
+<router-outlet></router-outlet>
+<!--[columns]="columns"-->

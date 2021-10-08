@@ -1,0 +1,7 @@
+{
+      "/api": {
+      "target": "http://dehensvbivm161.henkelgroup.net:1020",
+      "secure": false,
+      "changeOrigin": true
+    }
+}

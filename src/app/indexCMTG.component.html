@@ -1,0 +1,54 @@
+<table>
+    <tr><td>
+        <div class="topbar">
+            <div id="logo-box">
+                <img class="logo"/>
+            </div>
+            <div id="name-box">INDX&nbsp;{{betaVersion}}</div>
+            <div id="middle-box">      
+                Welcome username to the new INDX tool!  
+            </div>    
+            <div id="idModule">
+                <!--<select (change)="changeProject($event)">
+                    <option *ngFor="let opt of moduleArray" [value]="opt.key">{{opt.name}}</option>
+                </select>-->
+                <div id="modMultiple" style="display: none;">
+                    <select (change)="changeProject($event)" id="modselect">
+                        <option *ngFor="let mod of moduleArray" [value]="mod.id">
+                            {{mod.name}}
+                        </option>
+                    </select>
+                </div>
+                <div id="modSingle"><a href='' onclick='changeProject($event)'>{{moduleArray[0].name}}</a></div>
+            </div> 
+        </div>
+    </td></tr>
+    <tr><td>
+        <div class="navbox">
+            <div id="tile-1" class="tile-style">
+                <a routerLink="/input" routerLinkActive="active">Input & Review </a>
+            </div>
+            <div id="tile-2" class="tile-style" title="Coming soon!">
+                <a routerLink="/analyse" routerLinkActive="active">Analysis</a>
+            </div>
+            <div id="tile-3" class="tile-style" title="Coming soon!">
+                Training & Documentation
+            </div>
+            <div id="tile-4" class="tile-style" title="Coming soon!">
+                Risks & Opps
+            </div>
+            <div id="tile-5" class="tile-style" title="Coming soon!">
+                Contact Us
+            </div>
+        </div>
+    </td></tr>
+    <tr><td>
+        <div id="overview-box" class="overview">
+            Current month for Submission is {{currMonth}} - {{currYear}}.
+            <p>Please provide your data no later than {{currentDate | date:'30 MMM yyyy'}} EOD.</p>
+
+        </div>
+    </td></tr>
+ 
+</table>
+<router-outlet></router-outlet>
